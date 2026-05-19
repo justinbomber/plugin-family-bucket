@@ -77,4 +77,6 @@ Platform state uses `chrome.storage.local` under the key `pluginFamilyBucket:v1`
 
 ## License
 
-See the repository root for license information (if applicable).
+This project is licensed under the [MIT License](LICENSE).
+
+Copyright © 2026 [justinbomber](https://github.com/justinbomber).
