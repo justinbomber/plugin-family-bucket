@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Plugin Family Bucket 設定</title>
+    <link rel="stylesheet" href="options.css">
+  </head>
+  <body>
+    <main class="suite-wrap">
+      <header class="suite-head">
+        <h1 class="suite-title">進階設定</h1>
+        <p class="suite-desc">請先選擇功能模組；下方區塊會載入對應的詳細設定面板。</p>
+      </header>
+      <section class="suite-toolbar">
+        <label class="suite-field">
+          <span class="suite-field__label">選擇外掛模組</span>
+          <select id="pluginSelect" class="suite-select"></select>
+        </label>
+      </section>
+      <section id="panelHost" class="suite-panel-host" aria-live="polite"></section>
+    </main>
+    <script type="module" src="options.js"></script>
+  </body>
+</html>

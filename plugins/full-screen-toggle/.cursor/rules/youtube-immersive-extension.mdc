@@ -1,0 +1,46 @@
+---
+description: YouTube 沉浸式視窗化擴充功能（MV3）— 目標、架構與載入方式
+globs: "**/*.{json,js,css,html}"
+alwaysApply: false
+---
+
+# YouTube 沉浸式擴充功能（Windowed Fullscreen 對齊）
+
+## 目標
+
+- 在 **Manifest V3** 下，將 `*.youtube.com/watch` 分頁移入 **`chrome.windows.create({ type: "popup" })`** 視窗，以隱藏分頁列／網址列／書籤列（非 OS 全螢幕）。
+- 提供 **播放器控制列按鈕**、**`commands` 快捷鍵** 與 **擴充圖示 Popup** 進入／還原；設定存於 `chrome.storage.local`，session 存於 `chrome.storage.session`。
+- 補齊 PDF 對齊功能（不含付費與授權）：Auto Toggle、Scrolling、Hide Scrollbar、Subscriptions paid-promotion overlay 隱藏、Mini-player、Alt/Option+O PiP、Always Show Search Bar、Show Video Title on Hover。
+
+## 檔案職責
+
+| 路徑 | 職責 |
+|------|------|
+| `manifest.fragment.json` | 模組 manifest 片段（合併進全家桶根 manifest） |
+| `src/background/service-worker.js` | 建立／還原沉浸式視窗、訊息路由、`chrome.commands.onCommand` |
+| `src/content/youtube-content.js` | 播放器按鈕、可捲動模式切換 icon、mini-player（含跨閾值 FLIP 動畫）／右下角回到頂部、`yt-navigate-finish`、版面 class |
+| `src/popup/*` | 快速設定與視窗化滿版 toggle UI |
+| `src/options/*` | 進階設定頁：整頁以 H1（`summary`）展開／收合；內層 `SECTIONS` 小區塊亦可收合；展開狀態存 `localStorage`；含 shortcuts 導引 |
+| `src/shared/constants.js` | 訊息常數、command 常數與預設設定鍵 |
+| `src/shared/storage.js` | `getSettings` / `setSettings` |
+
+## 本機載入
+
+Chrome → 擴充功能 → 開發人員模式 → **載入未封裝項目** → 選取 `plugin-family-bucket/`（含根 `manifest.json`）。
+
+## 進度
+
+- 已完成：popup 視窗沉浸式、還原、設定持久化、SPA 導向時按鈕重掛、`windows.onRemoved` 清理 session。
+- 已完成：`commands.toggle-windowed-fullscreen`（不設預設鍵），可在 `chrome://extensions/shortcuts` 自訂。
+- 已完成：播放器按鈕／popup／commands 三路觸發統一走 toggle 邏輯。
+- 已完成：沉浸式版面改為主播放器 `100vw/100vh` 填滿；非「可捲動模式」時隱藏主要干擾區塊（導覽/留言/推薦等）。
+- 已完成：Popup 首屏快速設定（直觀選項）與 Options 進階設定分流。
+- 已完成：Options 頁、Auto Toggle、Scrolling / Hide Scrollbar、PiP 快捷鍵（Alt/Option+O）、影片標題 hover 顯示、Subscriptions paid-promotion overlay 隱藏、捲動觸發 mini-player（CSS 浮動播放器）。
+- 已完成：沉浸式 popup 下「可捲動模式」— 無捲動時才隱藏 `#below` 等區塊；可捲動時放開 html/body 與 `ytd-watch-flexy` 高度、`#columns` 加上 `padding-top`（vh/dvh）、全螢幕 fixed 播放器在 mini-player 前 `pointer-events: none`（控制列等恢復可點），並於 `#movie_player` 上以非 passive 之 `wheel` 備援將捲動轉給視窗以防萬一。
+- 已完成：mini-player 支援拖曳到任意位置，並以 `localStorage` 記住上次拖曳座標；下次進入 mini-player 會沿用上次位置，視窗尺寸改變時也會自動夾在可視範圍內。
+- 已完成：mini-player 拖曳事件改為 `pointerdown/move/up`（capture + pointer capture）避免被 YouTube 內部事件吃掉；mini-player `z-index` 提升至 `2147483647` 並加上 `isolation`，避免被留言區或其他浮層三點選單蓋過。
+- 已完成：播放器控制列移除劇院模式 icon，改為可切換「可捲動模式（scrollingSupport）」的 icon，並即時套用版面與 icon 啟用狀態。
+- 備註：`youtube-content.js` 動態載入 `constants.js` 時會優先嘗試獨立載入路徑 `src/shared/constants.js`，再嘗試全家桶路徑；`FALLBACK_MSG` 含 `SET_SETTINGS`，避免載入失敗時播放器設定按鈕無效。
+- 備註：可捲動 + mini-player 時，`#below`（留言）與播放器區為兄弟 stacking，`#movie_player` 極高 z-index 仍可能被留言區整塊蓋過；已對 `#player*` 外殼抬高 stacking 並 `pointer-events: none`，僅 `#movie_player` 接收點擊／拖曳。
+- 已完成：mini-player（捲動縮窗）生效時，視窗右下角（底／右各約 12–14px 留白）顯示「回到頂部」浮動按鈕（YouTube 紅半透明），`smooth` 捲動至頁頂；離開 mini 模式或還原沉浸式時移除。
+- 已完成：可捲動模式且啟用「向下捲動時顯示小播放器」時，跨越捲動閾值進／出 mini-player 會對 `#movie_player` 做約 **0.3s** 的 FLIP `transform` 過渡（由滿版區視覺縮至右下角小窗或反向），拖曳記憶、wheel 轉發與 Alt/Option+O **原生 PiP** 行為維持不變。

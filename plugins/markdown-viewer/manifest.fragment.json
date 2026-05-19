@@ -1,0 +1,37 @@
+{
+  "_comment": "Markdown Viewer：scripting 動態注入與 file / 可選全網來源；請先依 plugin-todo/markdown-viewer/BUILD-SUITE.md 複製 vendor/themes/icons。",
+
+  "permissions": ["scripting"],
+  "host_permissions": ["file:///*"],
+  "optional_host_permissions": ["*://*/"],
+  "optional_permissions": ["webRequest"],
+
+  "content_scripts": [
+    {
+      "matches": ["file:///*"],
+      "js": ["plugins/markdown-viewer/content/file-bridge.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": [
+        "plugins/markdown-viewer/content/anchor.svg",
+        "plugins/markdown-viewer/icons/default/16x16.png",
+        "plugins/markdown-viewer/icons/dark/16x16.png",
+        "plugins/markdown-viewer/icons/light/16x16.png",
+        "plugins/markdown-viewer/themes/*",
+        "plugins/markdown-viewer/vendor/mathjax/fonts/*",
+        "plugins/markdown-viewer/vendor/mathjax/extensions/*",
+        "plugins/markdown-viewer/vendor/prism/*",
+        "plugins/markdown-viewer/vendor/prism.min.css",
+        "plugins/markdown-viewer/vendor/prism-okaidia.min.css",
+        "plugins/markdown-viewer/src/ui/embedded-popup.html",
+        "plugins/markdown-viewer/popup/*",
+        "plugins/markdown-viewer/vendor/*"
+      ]
+    }
+  ]
+}

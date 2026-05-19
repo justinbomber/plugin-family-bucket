@@ -1,0 +1,309 @@
+html.yt-immersive-ext,
+html.yt-immersive-ext body {
+  width: 100% !important;
+  min-height: 100vh !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  background: #000 !important;
+}
+
+/* 觀賞頁外殼沿用百分比延展，避免多層疊加 100vw 與捲軸/inline 版面衝突（偏右或 resize 後不同步）。
+   實際滿幅由底下 #movie_player 單層固定 viewport。 */
+html.yt-immersive-ext ytd-watch-flexy,
+html.yt-immersive-ext ytd-watch-flexy #columns,
+html.yt-immersive-ext ytd-watch-flexy #primary,
+html.yt-immersive-ext ytd-watch-flexy #primary-inner,
+html.yt-immersive-ext ytd-watch-flexy #player,
+html.yt-immersive-ext ytd-watch-flexy #player-container {
+  width: 100% !important;
+  max-width: none !important;
+  min-height: 100% !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+}
+
+html.yt-immersive-ext #movie_player,
+html.yt-immersive-ext .html5-video-player {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  margin: 0 !important;
+  transform: none !important;
+  z-index: 2147483644 !important;
+}
+
+html.yt-immersive-ext .html5-video-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  left: 0 !important;
+  top: 0 !important;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+html.yt-immersive-ext .html5-main-video {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  left: 0 !important;
+  top: 0 !important;
+  margin: 0 !important;
+  transform: none !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+}
+
+/* 無「可捲動模式」時隱藏主欄／導覽干擾；可捲動時須保留 #below 等區塊以產生捲動高度 */
+html.yt-immersive-ext:not(.yt-immersive-scroll-enabled) #below,
+html.yt-immersive-ext:not(.yt-immersive-scroll-enabled) #related,
+html.yt-immersive-ext:not(.yt-immersive-scroll-enabled) #comments,
+html.yt-immersive-ext:not(.yt-immersive-scroll-enabled) ytd-comments,
+html.yt-immersive-ext:not(.yt-immersive-scroll-enabled) ytd-masthead,
+html.yt-immersive-ext:not(.yt-immersive-scroll-enabled) #masthead-container,
+html.yt-immersive-ext:not(.yt-immersive-scroll-enabled) ytd-mini-guide-renderer,
+html.yt-immersive-ext:not(.yt-immersive-scroll-enabled) tp-yt-app-drawer {
+  display: none !important;
+}
+
+/* 僅在設定「隱藏側欄」時套用 */
+html.yt-immersive-ext.yt-immersive-hide-secondary
+  ytd-watch-flexy[theater]
+  #secondary,
+html.yt-immersive-ext.yt-immersive-hide-secondary
+  ytd-watch-flexy[theater]
+  #secondary-inner {
+  display: none !important;
+}
+
+html.yt-immersive-ext ytd-watch-flexy[theater] #primary-inner {
+  max-width: none !important;
+}
+
+/* —— 可捲動模式：放開文件高度、為 fixed 播放器預留白、穿透滾輪至視窗 —— */
+html.yt-immersive-ext.yt-immersive-scroll-enabled,
+html.yt-immersive-ext.yt-immersive-scroll-enabled body {
+  height: auto !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+html.yt-immersive-ext.yt-immersive-scroll-enabled ytd-watch-flexy,
+html.yt-immersive-ext.yt-immersive-scroll-enabled ytd-watch-flexy #columns,
+html.yt-immersive-ext.yt-immersive-scroll-enabled ytd-watch-flexy #primary,
+html.yt-immersive-ext.yt-immersive-scroll-enabled ytd-watch-flexy #primary-inner,
+html.yt-immersive-ext.yt-immersive-scroll-enabled ytd-watch-flexy #player,
+html.yt-immersive-ext.yt-immersive-scroll-enabled ytd-watch-flexy #player-container {
+  min-height: 0 !important;
+  height: auto !important;
+}
+
+html.yt-immersive-ext.yt-immersive-scroll-enabled ytd-watch-flexy #columns {
+  padding-top: 100vh !important;
+}
+
+@supports (height: 100dvh) {
+  html.yt-immersive-ext.yt-immersive-scroll-enabled ytd-watch-flexy #columns {
+    padding-top: 100dvh !important;
+  }
+}
+
+html.yt-immersive-ext.yt-immersive-scroll-enabled:not(.yt-immersive-mini-player) #movie_player,
+html.yt-immersive-ext.yt-immersive-scroll-enabled:not(.yt-immersive-mini-player) #movie_player .html5-video-player {
+  pointer-events: none !important;
+}
+
+html.yt-immersive-ext.yt-immersive-scroll-enabled:not(.yt-immersive-mini-player) #movie_player .ytp-chrome-bottom,
+html.yt-immersive-ext.yt-immersive-scroll-enabled:not(.yt-immersive-mini-player)
+  #movie_player
+  .ytp-chrome-controls,
+html.yt-immersive-ext.yt-immersive-scroll-enabled:not(.yt-immersive-mini-player) #movie_player .ytp-chrome-top,
+html.yt-immersive-ext.yt-immersive-scroll-enabled:not(.yt-immersive-mini-player)
+  #movie_player
+  .ytp-progress-bar-container,
+html.yt-immersive-ext.yt-immersive-scroll-enabled:not(.yt-immersive-mini-player) #movie_player .ytp-button,
+html.yt-immersive-ext.yt-immersive-scroll-enabled:not(.yt-immersive-mini-player) #movie_player .ytp-panel,
+html.yt-immersive-ext.yt-immersive-scroll-enabled:not(.yt-immersive-mini-player) #movie_player .ytp-popup,
+html.yt-immersive-ext.yt-immersive-scroll-enabled:not(.yt-immersive-mini-player)
+  #movie_player
+  .ytp-caption-window-container {
+  pointer-events: auto !important;
+}
+
+html.yt-immersive-ext.yt-immersive-hide-scrollbar ::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+html.yt-immersive-ext.yt-immersive-always-search ytd-masthead {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+}
+
+html.yt-immersive-ext .yt-immersive-title-overlay {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 50;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 160ms ease;
+  pointer-events: none;
+}
+
+html.yt-immersive-ext .yt-immersive-title-overlay.yt-immersive-visible {
+  opacity: 1;
+}
+
+html.yt-immersive-ext.yt-immersive-mini-player #movie_player {
+  position: fixed !important;
+  left: var(--yt-immersive-mini-left, auto) !important;
+  top: var(--yt-immersive-mini-top, auto) !important;
+  right: var(--yt-immersive-mini-right, 18px) !important;
+  bottom: var(--yt-immersive-mini-bottom, 18px) !important;
+  width: min(360px, 36vw) !important;
+  height: calc(min(360px, 36vw) * 0.5625) !important;
+  z-index: 2147483647 !important;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+  pointer-events: auto !important;
+  cursor: grab;
+  isolation: isolate;
+}
+
+/*
+ * 小播放器模式下，`#movie_player` 雖為 fixed + 極高 z-index，但若只在 `#player-container` 內堆疊，
+ * 兄弟節點 `#below`（留言／描述）常有較高的 stacking，會整塊蓋過播放器，導致無法點擊／拖曳。
+ * 作法：抬高播放器外殼所在 stacking context，並讓外殼 pointer-events: none，僅 `#movie_player` 接收事件，
+ * 避免透明占位區擋住下方留言區。
+ */
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled ytd-watch-flexy #player,
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled ytd-watch-flexy #player-container,
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled ytd-watch-flexy #player-full-bleed-container,
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled ytd-watch-grid #player,
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled ytd-watch-grid #player-container,
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled ytd-watch-grid #player-full-bleed-container {
+  position: relative !important;
+  z-index: 2147483640 !important;
+  pointer-events: none !important;
+}
+
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled ytd-watch-flexy #below,
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled ytd-watch-grid #below {
+  position: relative !important;
+  z-index: 0 !important;
+}
+
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled ytd-watch-flexy #secondary,
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled ytd-watch-flexy #secondary-inner,
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled ytd-watch-grid #secondary,
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled ytd-watch-grid #secondary-inner {
+  position: relative !important;
+  z-index: 0 !important;
+}
+
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled #movie_player,
+html.yt-immersive-ext.yt-immersive-mini-player.yt-immersive-scroll-enabled #movie_player .html5-video-player {
+  pointer-events: auto !important;
+}
+
+html.yt-immersive-ext.yt-immersive-mini-player #movie_player video {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+html.yt-immersive-ext.yt-immersive-mini-player #movie_player:active {
+  cursor: grabbing;
+}
+
+/* 小播放器／捲動 PiP 生效時：視窗右下角「回到頂部」（與底／右各留一小段距離；不依小播放器位置推算，避免拖曳後錯位） */
+.yt-immersive-back-to-top-fab {
+  position: fixed !important;
+  z-index: 2147483646 !important;
+  right: max(14px, calc(env(safe-area-inset-right, 0px) + 12px)) !important;
+  bottom: max(14px, calc(env(safe-area-inset-bottom, 0px) + 12px)) !important;
+  left: auto !important;
+  top: auto !important;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  /* YouTube 品牌紅（約 #ff0000）半透明 */
+  background: rgba(255, 0, 0, 0.62) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  opacity: 1;
+  transition: background 0.15s ease, transform 0.15s ease;
+  pointer-events: auto !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.yt-immersive-back-to-top-fab:hover {
+  background: rgba(255, 0, 0, 0.82) !important;
+  transform: scale(1.04);
+}
+
+.yt-immersive-back-to-top-fab svg {
+  display: block;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* 播放器旁自訂按鈕：固定高度，勿用 height:100%（父層無高度時會變 0 而「消失」） */
+.yt-immersive-ext-btn.ytp-button,
+.yt-immersive-scroll-btn.ytp-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  min-width: 40px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  vertical-align: top;
+  position: relative;
+  top: 4px;
+  transform: none;
+  color: #fff;
+  opacity: 0.9;
+  flex-shrink: 0;
+  visibility: visible !important;
+}
+
+.yt-immersive-ext-btn.ytp-button:hover,
+.yt-immersive-scroll-btn.ytp-button:hover {
+  opacity: 1;
+}
+
+.yt-immersive-ext-btn-active.ytp-button,
+.yt-immersive-scroll-btn-active.ytp-button {
+  opacity: 1;
+}
+
+.yt-immersive-ext-btn svg,
+.yt-immersive-scroll-btn svg {
+  display: block;
+  flex-shrink: 0;
+  pointer-events: none;
+}

@@ -1,0 +1,116 @@
+/* 僅供全家桶二級 iframe（embedded-popup.html）載入；
+   index.css 的 html/body overflow:hidden + #popup float 需在嵌入情境覆寫。 */
+
+html.is-suite-embed {
+  width: 100%;
+}
+
+html.is-suite-embed,
+html.is-suite-embed body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* 獨立版用 overflow:hidden 會鎖死 scrollHeight，無法對外匡回報高度 */
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  width: 100%;
+}
+
+html.is-suite-embed body.is-popup {
+  background: #fff;
+}
+
+/* 與 upstream 對齊：第一顆 Md / Html 靠左，Defaults 靠右；勿改 float:none */
+#popup {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px 10px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+#popup button:nth-child(2) {
+  float: right;
+}
+#popup button:nth-child(2n+3) {
+  float: right;
+  margin-top: 26px;
+}
+
+#popup .m-panels {
+  margin-bottom: 8px;
+}
+
+#popup .m-advanced-error {
+  clear: both;
+  margin: 6px 0 0;
+  font-size: 11px;
+  line-height: 1.35;
+  color: #c62828;
+}
+#popup:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+#popup .m-button,
+#popup .mdc-button {
+  font-size: 11px !important;
+  padding: 0 10px !important;
+  min-height: 28px !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+#popup .m-select {
+  width: 100%;
+  max-width: 100%;
+  font-size: 12px;
+  line-height: 1.35;
+  text-transform: none;
+  padding: 6px 8px;
+  margin: 12px 0 0;
+  box-sizing: border-box;
+}
+
+/* 標籤列改為 flex，避免窄寬下 33.33% tab 溢出 */
+.m-tabs {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  min-height: 30px;
+  margin: 12px 0 0;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.m-tabs a.mdc-tab {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto !important;
+  max-width: none !important;
+  height: 30px;
+  line-height: 30px;
+  font-size: 11px;
+  text-transform: none;
+  padding: 0 2px;
+  box-sizing: border-box;
+}
+
+.m-switch .mdc-switch-label {
+  font-size: 12px;
+  line-height: 1.35rem;
+  width: auto !important;
+  max-width: calc(100% - 44px);
+  white-space: normal;
+}
+
+.scroll.max {
+  height: 180px;
+}

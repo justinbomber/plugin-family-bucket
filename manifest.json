@@ -1,0 +1,98 @@
+{
+  "manifest_version": 3,
+  "name": "Plugin Family Bucket",
+  "version": "0.1.0",
+  "description": "多功能外掛全家桶平台（Infrastructure）",
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*.youtube.com/*",
+    "file:///*"
+  ],
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Plugin Family Bucket",
+    "default_popup": "src/popup/popup.html"
+  },
+  "options_ui": {
+    "page": "src/options/options.html",
+    "open_in_tab": true
+  },
+  "commands": {
+    "toggle-windowed-fullscreen": {
+      "description": "切換 YouTube 視窗化滿版（YouTube Windowed Fullscreen）"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.youtube.com/*"
+      ],
+      "js": [
+        "plugins/full-screen-toggle/src/content/youtube-content.js"
+      ],
+      "css": [
+        "plugins/full-screen-toggle/src/content/youtube-content.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "file:///*"
+      ],
+      "js": [
+        "plugins/markdown-viewer/content/file-bridge.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "plugins/full-screen-toggle/src/shared/constants.js",
+        "src/shared/message-types.js"
+      ],
+      "matches": [
+        "https://*.youtube.com/*"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "plugins/markdown-viewer/content/anchor.svg",
+        "plugins/markdown-viewer/icons/default/16x16.png",
+        "plugins/markdown-viewer/icons/dark/16x16.png",
+        "plugins/markdown-viewer/icons/light/16x16.png",
+        "plugins/markdown-viewer/themes/*",
+        "plugins/markdown-viewer/vendor/mathjax/fonts/*",
+        "plugins/markdown-viewer/vendor/mathjax/extensions/*",
+        "plugins/markdown-viewer/vendor/prism/*",
+        "plugins/markdown-viewer/vendor/prism.min.css",
+        "plugins/markdown-viewer/vendor/prism-okaidia.min.css",
+        "plugins/markdown-viewer/src/ui/embedded-popup.html",
+        "plugins/markdown-viewer/popup/*",
+        "plugins/markdown-viewer/vendor/*"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "plugins/full-screen-toggle/assets/icon16.png",
+    "32": "plugins/full-screen-toggle/assets/icon32.png",
+    "48": "plugins/full-screen-toggle/assets/icon48.png",
+    "128": "plugins/full-screen-toggle/assets/icon128.png"
+  },
+  "optional_host_permissions": [
+    "*://*/"
+  ],
+  "optional_permissions": [
+    "webRequest"
+  ]
+}
